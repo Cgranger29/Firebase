@@ -1,85 +1,78 @@
+// add in config for firebase DB
 
+ var config = {
+	apiKey: "AIzaSyCI625HMTX21ok0yaQTnYL_uxw9bWQIFJo",
+	authDomain: "train-schedule-4d533.firebaseapp.com",
+	databaseURL: "https://train-schedule-4d533.firebaseio.com",
+	projectId: "train-schedule-4d533",
+	storageBucket: "",
+	messagingSenderId: "117242632960"
+ };
+ 
+ firebase.initializeApp(config);
+ 
+ //add DB ref variable
+ let database = firebase.database();
+ 
+let now = moment();
 
-let limit = "10";
-let subject = "";
-let arr = ['tennis', 'baseball', 'hockey'];
-const apikey = "fMXM1tplkxAXn5EA91akb0ZDK8ODwYrO"
-let queryURL = "http://api.giphy.com/v1/gifs/search?q=" + subject + "&api_key=" + apikey + "&limit=" + limit;
-console.log(queryURL);
+let x = "2018-06-25 16:00:00";
 
-let gif = $("#gif");
+let start_time = moment(x, 'YYYY-MM-DD hh:mm');
+console.log(start_time.format('YYYY-MM-DD hh:mm A'));
 
-//function for adding buttons from pre-defined array for examples
-for(i=0; i < arr.length; i++){
-	var btn = $('<button type="button" class="btn btn-outline-primary" id="btncolor" onclick="pullgif(this)" >' + arr[i] + '</button>');
-	btn.attr("category", arr[i]);
-	$('h3').append(btn);
-};
+console.log(now.format('YYYY-MM-DD hh:mm A'));
 
-//Add button based on user choice input
+let diff = start_time.diff(now, 'minutes');
 
-function adder(){
-	console.log($("#usrinput").val());
-	if($("#usrinput").val() ==""){
-		return;
-	}else{
-	var usrbtn = $('<button type="button" class="btn btn-outline-primary" id="btncolor" onclick="pullgif(this)">' + $("#usrinput").val()  + '</button>')
-		usrbtn.attr("category", $("#usrinput").val()); 
-	$('h3').append(usrbtn);
-	}};
+console.log(diff);
+
+//Submit function definition
+$(".btnsubmit").click(function(e) {
+	//define variable for all user inputs on page
+	let name = $("#name").val().trim();
+	let dest = $("#destination").val().trim();
+	let train_time = $("#first").val().trim();
+	let freq = $("#freq").val().trim();
+	let arrival = "TBD";
+	let min_away = "TBD";
+	let timeDifference = moment().diff(moment(train_time,"hh:mm A"),'m');
+	//prevents page from refreshing on submit
+	e.preventDefault();
+	//reset the form on submit
+	$("#form")[0].reset();
+		
+		//pushes the values from user input to database. Will most likely be replaced with append so as to not overwrite the data
+		database.ref().push({
+		Train_Name: name,
+		Destination: dest,
+		First_Train_Time: train_time,
+		Frequency: freq,
+		Time_To_Arrival: timeDifference,
 	
-
-//take category attribute and assign to subject variable which makes up the api call url.
-function pullgif(btn){
-	$("#gif").empty();
-	subject = btn.getAttribute("category");
-	queryURL = "http://api.giphy.com/v1/gifs/search?q=" + subject + "&api_key=" + apikey + "&limit=" + limit;
-	console.log(subject);
-	call();
-};
+	});
 	
-//logic for playing and stopping the GIF.
-function playorstop(img){
-		if(img.src != img.getAttribute("animate")){
-			img.src = img.getAttribute("animate");
-		}else{
-			img.src = img.getAttribute("still");
-		}
-	};
-
-
-function call()	{
+});
 	
-	//ajax call to api
 	
-	console.log(subject);
-	$.ajax({
-	url: queryURL,
-	method: "GET"
-	}).
-	
-	//once response is received run function that that adds still images to div ele
-	
-	then(function(response){
-		for(i=0; i < response.data.length;i++){
-			console.log(response);
-			
-			var img = $('<img id="image'+ i + '"class="image img-fluid border border-primary" onclick="playorstop(this)">');
-			var rating = $('<div id="rating">GIF Rating: ' + response.data[i].rating + '---Click Image to Play or Stop GIF' + '</div>');
-			console.log(response.data[i].embed_url);
-			img.attr("src", response.data[i].images.fixed_height_still.url);
-			img.attr("still", response.data[i].images.fixed_height_still.url);
-			img.attr("animate", response.data[i].images.fixed_height.url);
-			
-			gif.append("<br>");	
-			$("#gif").append(img);
-			$("#gif").append(rating);
+//update html page values based on values returned from the database	
+ database.ref().on('child_added', function(snapshot){
+	 console.log(snapshot.val());
+	 console.log(snapshot.val().Train_Name);
+	let name = snapshot.val().Train_Name;
+	let dest = snapshot.val().Destination;
+	let train_time = snapshot.val().First_Train_Time;
+	let freq = snapshot.val().Frequency;
+	let arrival = "TBD";
+	let min_away = "TBD";
+    let timeDifference = moment().diff(moment(train_time,"hh:mm A"),'m');
 
-	}
-	
-
-})};
-
-
-
-
+	$("#table_data").append("<tr><td>" + name + "</td><td>" + dest + "</td><td>" + freq + "</td><td>" + train_time + "</td><td>" + timeDifference*-1 + "</td></tr>");
+	 
+ });
+ 
+ 
+ //30 second refreshes to show updated data
+ setTimeout(function(){
+    location = ''
+  },60000)

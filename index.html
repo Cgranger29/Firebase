@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Food and Drinks</title>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
-
-
-
-</head>
-<body>
-<!-- recipe show / hide -->
-
-
-
-<!-- Dynamic Content, copy from here-->
-<div class="accordion" id="accordionExample">
-    <div class="card">
-      <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-            <img src="http://via.placeholder.com/100x100">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            First Dish Name
-          </button>
-        </h5>
-      </div>
+  <head>
+    <meta charset="utf-8"> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+	<link rel="stylesheet" href="assets/reset.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/style.css">
+	<script src="moment.min.js"></script>
+	<script src="countdown.min.js"></script>
+	<script src="moment-countdown.min.js"></script>
+	
+	
+  </head>
   
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                        <!-- Actual image will be brought in dynamically -->
-                  <img src="http://via.placeholder.com/250x250">
-              </div>
-              <div class="col-md-6">
-                  <ul id="ingredient-list">Ingredients
-                      <li>Item</li>
-                      <li>Item</li>
-                      <li>Item</li>
-                      <li>Item</li>
-                      <li>Item</li>
-                  </ul>
-              </div>
-          </div>
-            
-        <div class="row">
-            <div id="cooking-directions">
-                <p>
-                    <!-- Cooking Directions go here -->
+  <body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 headContainer">
+					<h1 class="header">
+						Train Schedule
+					</h1>
+			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Train Table</h2>        
+					<table class="table table-bordered">
+						<thead>
+						  <tr>
+							<th>Train Name</th>
+							<th>Destination</th>
+							<th>Frequency (min) </th>
+							<th>Next Arrival</th>
+							<th>Minutes Away</th>
+						  </tr>
+						</thead>
+						<tbody id="table_data">
+						</tbody>
+					</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+			<form id="form">
+				<div class="form-group">
+				  <label>Train Name</label>
+				  <input type="text" class="form-control" id="name">
+				</div>
+				<div class="form-group">
+				  <label>Destination</label>
+				  <input type="text" class="form-control" id="destination">
+				</div>
+				<div class="form-group">
+				  <label>First Train Time</label>
+				  <input type="time" class="form-control" id="first">
+				</div>
+				<div class="form-group">
+				  <label>Frequency(min)</label>
+				  <input type="number" class="form-control" id="freq">
+				</div>
+				<button type="submit" value="Submit" class="btn btn-primary btnsubmit">Submit</button>
+				
+			</form>
+			</div>
+		</div>
+	</div>
+  
+  
+  
 
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis quaerat repellat id consequatur totam dignissimos quia, voluptatem, saepe dolore eveniet tempore inventore, sed iusto sapiente eum harum! Repellat fugiat minus veniam vitae neque facere alias ratione, voluptates cum quasi aspernatur similique, nostrum autem repellendus modi sit error expedita minima? Velit eligendi error ipsa incidunt dicta illum ducimus saepe fuga laboriosam. Error dolorum illum, est quod quisquam iusto voluptate sed eaque? Sint, eveniet? Mollitia, saepe! Optio iure laborum commodi ex doloremque accusantium perspiciatis soluta eius vitae odio repudiandae debitis error beatae, voluptate tenetur corporis est quaerat facilis dolor! Dolores deserunt rem, laudantium autem optio eaque dicta sapiente suscipit debitis sunt molestias ipsam facere maiores vero voluptates aliquid explicabo minus totam mollitia illum corrupti. Debitis ad alias mollitia dolor pariatur culpa reprehenderit minus, laudantium, fugit rerum magni accusantium dolore earum quo at explicabo itaque porro reiciendis possimus, nesciunt laborum. Atque, quia eveniet.
-                </p>
-            </div>
-        </div>
-
-
-        </div>
-      </div>
-    </div>
-
-<!--end copy area -->
-   
-
-</body>
-</html>
-
-
-
-
-<!-- drink cards -->
+  <script src="assets/logic.js"></script>
+  </body>
