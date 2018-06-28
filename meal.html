@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Food and Drink</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript" src="md5.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Meal DB Testing</h1>
+
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <button class="btn btn-outline-secondary addbutton" type="button" onclick="getdrink()">Get Meal</button>
+    </div>
+    <input type="text" class="form-control" placeholder="Enter Text...." aria-label="" aria-describedby="basic-addon1" id="drink">
+  </div>
+  <iframe width="420" height="315" src="http://www.youtube.com/embed/nIsCs9_-LP8" frameborder="0" allowfullscreen></iframe>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/Tur7i37z8dI" frameborder="1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <script type="text/javascript">
+                                                                        
+
+  var url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+  var drink = "Old Fashioned"
+  var apicall = url + drink
+  var random = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+  var uri = encodeURI(url);
+
+
+
+function call(){
+  console.log(uri);
+  // send off the query
+	$.ajax({
+	url: uri,
+	method: "GET"
+	}).
+	
+	//once response is received run function that that adds still images to div ele
+	
+	then(function(data){
+    var drinks = data.drinks
+    //drink objects
+    console.log(drinks);
+
+    //drink name
+    console.log("Drink Name: " + drinks[0].strDrink);
+    //drink category
+    console.log("Type of Drink: " + drinks[0].strCategory);
+    //drink glass type
+    console.log("Best served in a " + drinks[0].strGlass);
+    
+        //Instructions for the drink
+
+    
+
+      //image of the drink
+      console.log(drinks[0].strDrinkThumb);
+    //loop through and display ingredients
+    let i =1;
+
+    let ingredient = "strIngredient" + i.toString();
+     for(i;i <=15; i++){
+       ingredient = "strIngredient" + i.toString();
+       if(drinks[0][ingredient] != ""){
+         console.log(drinks[0][ingredient]);
+       }else{
+        console.log(drinks[0].strInstructions);
+         return;
+       }
+       }
+
+       
+       })};
+
+
+function getdrink(btn){
+  drink = $("#drink").val();
+  console.log(drink);
+  url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+ drink;
+  uri = encodeURI(url);
+  call();
+}
+
+
+
+    </script>
+  </div>
+</body>
+
+</html>
